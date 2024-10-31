@@ -7,7 +7,6 @@ import { getAllPotograpyName } from '../api/PotographyPackage.api';
 import isTokenValid from '../utils/checkToken';
 import { useSelector } from 'react-redux';
 import { isTimeValid, isDateValid, isFormValid } from '../utils/validation'
-import Swal from 'sweetalert2';
 
 const AddOrderFormComponent = () => {
     const [packageName, setPackageName] = useState('');
@@ -53,21 +52,13 @@ const AddOrderFormComponent = () => {
             console.log(order);
             const response = await addOrderPackage(order);
             console.log(response);
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Your order has been successfully added.',
-            });
+            
             setPackageName('');
             setDate('');
             setBeginingHour('');
             setEndHour('');
         } catch (error: any) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error.response.data,
-            });
+            
         }
     };
 

@@ -4,7 +4,6 @@ import { Close, Edit, Delete, Save, Add } from '@mui/icons-material';
 import { deleteUser, editUser, getAllUsers, SignUp } from '../../api/user.api';
 import { User } from '../../interface/user.interface';
 import { validateName, validatePrice, validatePhone, validatePassword, validateEmail } from '../../utils/validation'
-import Swal from 'sweetalert2';
 
 const CustomersAll = () => {
     const [AllCustomers, setAllCustomers] = useState<User[]>([]);
@@ -20,7 +19,6 @@ const CustomersAll = () => {
             try {
                 const response = await getAllUsers();
                 console.log(response);
-                setAllCustomers(response as User[]);
             } catch (error) {
                 console.error('Error fetching All customers:', error);
             }
@@ -51,46 +49,7 @@ const CustomersAll = () => {
 
 
     const handleSave = async (editedPackage: User) => {
-        const nameValidationResult: string = validateName(editedPackage.name);
-        if (nameValidationResult) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Please enter a valid Name value.',
-            });
-            return;
-        }
-        const emailValidationResult: string = validateEmail(editedPackage.email);
-        if (emailValidationResult) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Please enter a valid Email value.',
-            });
-            return;
-        }
-        const phoneValidationResult: string = validatePhone(editedPackage.phone);
-        if (phoneValidationResult) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Please enter a valid Phone value.',
-            });
-            return;
-        }
-        try {
-            await editUser(editedPackage);
-            setAllCustomers(prevPackages =>
-                prevPackages.map((pkg, index) => (index === editingIndex ? editedPackage : pkg))
-            );
-            setEditingIndex(null);
-        } catch (error:any) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error.response.data,
-            });
-        }
+       
     };
 
     const handleDelete = async (index: number) => {
@@ -112,78 +71,7 @@ const CustomersAll = () => {
     };
 
     const handleAdd = async () => {
-        if (name && email && phone && password) {
-            try {
-                const u: User = {
-                    id: 0,
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    password: password,
-                    isAdmin: false
-                };
-                const nameValidationResult: string = validateName(name);
-                if (nameValidationResult) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Please enter a valid Name value.',
-                    });
-                    return;
-                }
-                const emailValidationResult: string = validateEmail(email);
-                if (emailValidationResult) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Please enter a valid Email value.',
-                    });
-                    return;
-                }
-                const passwordValidationResult: string = validatePassword(password);
-                if (passwordValidationResult) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Please enter a valid Password value.',
-                    });
-                    return;
-                }
-                const phoneValidationResult: string = validatePhone(phone);
-                if (phoneValidationResult) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Please enter a valid Phone value.',
-                    });
-                    return;
-                }
-                const response = await SignUp(u);
-                if (response === 'sign up 0 secceeded') {
-                    setAllCustomers([...AllCustomers, u]);
-                    setName('');
-                    setEmail('');
-                    setPhone('')
-                    setPassword('')
-                    setIsDialogOpen(false);
-                } else {
-                    console.error('Error adding new user: Response status is not 200');
-                }
-            } catch (error: any) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.response.data,
-                });
-                console.error('Error logging in:', error);
-            }
-        }
-        else
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Not completing values ​​in all fields.',
-            });
+        
     }
 
     const setIsDialogOpenToAdd = async () => {

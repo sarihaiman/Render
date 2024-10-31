@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { User } from '../interface/user.interface';
 import { jwtDecode } from 'jwt-decode';
 import { editUserForgetPassword, getAllUsers, SignIn } from '../api/user.api';
-import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -93,11 +92,7 @@ export default function SigninForm() {
             setEmail('');
             setPassword('');
         } catch (error: any) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error.response.data,
-                    });
+                 
             console.error('Error logging in:', error);
         }
     };
@@ -127,26 +122,14 @@ export default function SigninForm() {
         if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             const userExists = AllCustomers.some((u: User) => u.email === email);
             if (!userExists) {
-                Swal.fire({
-                    text: 'Email Not Found- SignUp',
-                    icon: 'error',
-                    showCloseButton: true,
-                    confirmButtonColor: '#d33',
-                    confirmButtonText: 'Close',
-                });
+             
             } else {
                 code = String(Math.floor(100000 + Math.random() * 900000)); // Generate a random code
                 setResetCode(code);
                 setShowModal(true);
             }
         } else {
-            Swal.fire({
-                text: 'Invalid Email',
-                icon: 'error',
-                showCloseButton: true,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Close',
-            });
+            
         }
     };
 
@@ -156,13 +139,7 @@ export default function SigninForm() {
             setShowA(true);
         } else {
             setShowModal(false);
-            Swal.fire({
-                text: 'Incorrect Reset Code',
-                icon: 'error',
-                showCloseButton: true,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Close',
-            });
+          
             // setShowModal(true);
         }
     };

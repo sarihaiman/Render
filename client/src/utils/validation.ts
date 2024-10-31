@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 
 export const validateEmail = (email:string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -55,11 +54,7 @@ export const validatePassword = (password: string) => {
 
 export const isFormValid = (packageName:any, date:any, beginingHour:any, endHour:any) => {
     if (!packageName || !date || !beginingHour || !endHour) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Validation Error',
-            text: 'Please fill in all fields',
-        });
+
         return false;
     }
     return true;
@@ -68,11 +63,7 @@ export const isFormValid = (packageName:any, date:any, beginingHour:any, endHour
 export const isDateValid = (selectedDate:any) => {
     const currentDate = new Date();
     if (selectedDate < currentDate) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Validation Error',
-            text: 'Please select a future date',
-        });
+
         return false;
     }
     return true;
@@ -83,11 +74,7 @@ export const isTimeValid = (startHour:any, endHour:any) => {
     const end = new Date(`01/01/2000 ${endHour}`);
     const timeDiff = (end.getTime() - start.getTime()) / 1000;
     if (timeDiff < 1800) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Validation Error',
-            text: 'End hour should be at least 30 minutes after beginning hour',
-        });
+
         return false;
     }
     return true;

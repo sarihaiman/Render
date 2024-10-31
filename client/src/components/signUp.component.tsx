@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { User } from '../interface/user.interface';
 import { Link } from 'react-router-dom';
 import { validateName, validatePhone, validatePassword, validateEmail } from '../utils/validation';
-import Swal from 'sweetalert2';
 
 const inputStyle = {
     height: '40px',
@@ -68,21 +67,9 @@ export default function SignUpForm() {
             setPhone('');
             dispatch(FillDataCurrentUser(user));
             sessionStorage.setItem("currentUser", JSON.stringify(user));
-            sessionStorage.setItem("token", response.data);
-            console.log('SignUp successful:', response.data);
+
         } catch (error: any) {
-            if (error.response.data == "email exists")
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Email already exists. Please use a different email.',
-                });
-            else
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error',
-                });
+           
         }
     };
 

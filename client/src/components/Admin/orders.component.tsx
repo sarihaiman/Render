@@ -11,7 +11,6 @@ import { getAllUsers } from '../../api/user.api';
 import { Delete, Edit, Save, Close, Add } from '@mui/icons-material';
 import isTokenValid from '../../utils/checkToken';
 import { isTimeValid, isDateValid, isFormValid } from '../../utils/validation'
-import Swal from 'sweetalert2';
 
 const localizer = momentLocalizer(moment);
 
@@ -31,36 +30,6 @@ const AdminCalendar = () => {
   const [beginingHour, setBeginingHour] = useState('');
   const [endHour, setEndHour] = useState('');
   const [packages, setPackages] = useState<PotographyPackage[]>([]);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const responsePackageName = await getAllPotograpyName();
-        setResponsePackageName(responsePackageName);
-
-        const responseUsers = await getAllUsers();
-        setUsers(responseUsers);
-
-        const dataPackageName = responsePackageName;
-        const packageNames = dataPackageName.map((item: any) => ({ id: item.id, type: item.type }));
-        setPackages(packageNames);
-
-        const datauserName = responseUsers;
-        const packageNames2 = datauserName.map((item: any) => ({ id: item.id, name: item.name }));
-        setnameUser(packageNames2);
-
-        const response = await getOrderPackage();
-        if (response.status !== 200) {
-          throw new Error('Failed to fetch events');
-        }
-        const data: OrderPackage[] = response.data;
-        setEvents(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchEvents();
-  }, []);
 
   const eventStyleGetter = () => {
     return {
@@ -108,20 +77,9 @@ const AdminCalendar = () => {
     try {
       if (editedOrder) {
         const response = await editOrderPackage(editedOrder);
-        if (response.status === 200) {
-          const updatedEvents = events.map((event) => (event.id === editedOrder.id ? editedOrder : event));
-          setEvents(updatedEvents);
-          setOpenDialog(false);
-        } else {
-          console.error('Failed to save the edited order');
-        }
+        
       }
     } catch (error: any) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: error.response.data,
-      });
     }
   };
 
@@ -132,12 +90,7 @@ const AdminCalendar = () => {
       setEditingIndex(selectedEvent?.id ?? null);
       setEditedOrder(selectedEvent);
     }
-    else
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'You cannot edit past events.',
-      });
+
   };
 
   const handleCancelEdit = () => {
@@ -170,11 +123,6 @@ const AdminCalendar = () => {
       console.log(order);
       const response = await addOrderPackage(order);
       console.log(response);
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Your order has been successfully added.',
-      });
       console.log('Order added successfully:', order);
       setuserName('');
       setPackageName('');
@@ -184,11 +132,6 @@ const AdminCalendar = () => {
       setIsDialogOpen(false);
       setEvents([...events, order]);
     } catch (error: any) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: error.response.data,
-      });
     }
   };
 

@@ -4,7 +4,6 @@ import { Close, Edit, Delete, Save, Add } from '@mui/icons-material';
 import { getAllPotograpyName, editPotographyPackage, deletePotographyPackage, addPotographyPackage } from '../../api/PotographyPackage.api';
 import { PotographyPackage } from '../../interface/PotographyPackage.interface';
 import { validateName, validatePrice } from '../../utils/validation'
-import Swal from 'sweetalert2';
 
 const PotographyPackageAll = () => {
     const [photographyPackages, setPhotographyPackages] = useState<PotographyPackage[]>([]);
@@ -18,7 +17,6 @@ const PotographyPackageAll = () => {
         const fetchPhotographyPackages = async () => {
             try {
                 const response = await getAllPotograpyName();
-                setPhotographyPackages(response as PotographyPackage[]);
                 setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching business details:', error);
@@ -33,33 +31,7 @@ const PotographyPackageAll = () => {
     };
 
     const handleSave = async (editedPackage: PotographyPackage) => {
-        const errorName = validateName(editedPackage.type);
-        if (errorName) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Please enter a valid Package Type.',
-            });
-            return;
-        }
-        const errorHours = validatePrice(editedPackage.moneyToHour);
-        if (errorHours) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Please enter a valid Money To Hour value.',
-            });
-            return;
-        }
-        try {
-            await editPotographyPackage(editedPackage);
-            setPhotographyPackages(prevPackages =>
-                prevPackages.map((pkg, index) => (index === editingIndex ? editedPackage : pkg))
-            );
-            setEditingIndex(null);
-        } catch (error) {
-            console.error('Error updating business details:', error);
-        }
+
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -81,56 +53,7 @@ const PotographyPackageAll = () => {
     };
 
     const handleAdd = async () => {
-        if (newPackageType && newPackageMoneyToHour) {
-            try {
-                const p: PotographyPackage = {
-                    id: 0,
-                    type: newPackageType,
-                    moneyToHour: Number(newPackageMoneyToHour)
-                };
-                const errorName = validateName(p.type);
-                if (errorName) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Please enter a valid Package Type.',
-                    });
-                    return;
-                }
-                const errorHours = validatePrice(p.moneyToHour);
-                if (errorHours) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Please enter a valid Money To Hour value.',
-                    });
-                    return;
-                }
-                const response = await addPotographyPackage(p);
-                if (response.status === 200) {
-                    const newPackage: PotographyPackage = response.data; // Extract data from the response
-                    setPhotographyPackages([...photographyPackages, newPackage]);
-                    setNewPackageType('');
-                    setNewPackageMoneyToHour('');
-                    setIsDialogOpen(false);
-                } else {
-                    console.error('Error adding new package: Response status is not 200');
-                }
-            } catch (error: any) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.response.data,
-                });
-                console.error('Error logging in:', error);
-            }
-        }
-        else
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Not completing values ​​in all fields.',
-            });
+       
     };
 
     return (
