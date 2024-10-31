@@ -1,0 +1,13 @@
+.rsc-container .rsc-ts-bubble {
+    background-color: rgb(111, 233, 224);;
+}
+
+.rsc-header {
+    background-color: rgb(111, 233, 224);;
+}
+
+.rsc-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
