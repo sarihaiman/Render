@@ -24,12 +24,7 @@ const AddOrderFormComponent = () => {
         const fetchPackages = async () => {
             try {
                 const response = await getAllPotograpyName();
-                if (!response) {
-                    throw new Error('Failed to fetch data');
-                }
                 const data = response;
-                const packageNames = data.map((item: any) => ({ id: item.id, type: item.type }));
-                setPackages(packageNames);
             } catch (error) {
                 console.error('Error fetching packages:', error);
             }

@@ -28,7 +28,6 @@ const BusinessDetailsComponent : React.FC = () => {
         const fetchBusinessDetails = async () => {
             try {
                 const details = await getBusinessDetaild();
-                setBusinessDetails(details as businessDetails);
             } catch (error) {
                 console.error('Error fetching business details:', error);
             }

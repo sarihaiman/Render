@@ -28,8 +28,7 @@ export default function DocumentUploadComponent() {
   useEffect(() => {
     const fetchUploads = async () => {
       try {
-        const response = await axios.get(`${domain}/upload`);
-        setFilenames(response.data.files);
+
       } catch (error) {
         console.error('Error fetching files', error);
       }
@@ -43,12 +42,6 @@ export default function DocumentUploadComponent() {
       <List style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {filenames.map((fileName, index) => (
           <div key={index} style={{ width: '300px', height: '70px', margin: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {/* <ListItem key={index} button onClick={() => downloadFile(`${domain}/uploadOne/${fileName}`)}>
-              <ListItemIcon>
-                <GetAppIcon />
-              </ListItemIcon>
-              <ListItemText primary={fileName} />
-            </ListItem> */}
           </div>
         ))}
       </List>

@@ -13,7 +13,6 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { FormHelperText } from '@material-ui/core';
 import { validatePassword, validateEmail } from '../utils/validation';
-import { domain } from '../Config';
 
 export default function SigninForm() {
     const [email, setEmail] = useState('');
@@ -70,7 +69,6 @@ export default function SigninForm() {
         const fetchAllCustomers = async () => {
             try {
                 const response = await getAllUsers();
-                setAllCustomers(response as User[]);
             } catch (error) {
                 console.error('Error fetching All customers:', error);
             }
@@ -92,25 +90,8 @@ export default function SigninForm() {
             return;
         }
         try {
-            const response: string = await SignIn({
-                email: email,
-                password: password
-            });
-            sessionStorage.setItem("token", response);
-            const userDecode: any = jwtDecode(response);
             setEmail('');
             setPassword('');
-            const user: User = {
-                email: userDecode.email,
-                password: '',
-                phone: userDecode.phone,
-                id: userDecode.id,
-                name: userDecode.name,
-                isAdmin: userDecode.isAdmin
-            };
-            dispatch(FillDataCurrentUser(user));
-            sessionStorage.setItem("currentUser", JSON.stringify(user));
-            console.log('SigninForm successful:', response);
         } catch (error: any) {
                     Swal.fire({
                         icon: 'error',
@@ -157,13 +138,6 @@ export default function SigninForm() {
                 code = String(Math.floor(100000 + Math.random() * 900000)); // Generate a random code
                 setResetCode(code);
                 setShowModal(true);
-                await axios.get(`${domain}/send-email`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        "reset": code,
-                        "mail": email
-                    }
-                });
             }
         } else {
             Swal.fire({

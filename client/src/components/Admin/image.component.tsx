@@ -24,7 +24,6 @@ const GalleryComponent: React.FC = () => {
     const fetchImages = async () => {
       try {
         const response = await getimage();
-        setImages(response.data);
       } catch (error) {
         console.error('Error fetching images:', error);
       }
@@ -57,19 +56,7 @@ const GalleryComponent: React.FC = () => {
     formData.append('file', file);
 
     try {
-      // await addimage(formData);
-      await axios.post(`${domain}/image`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: (progressEvent) => {
-          const progress = Math.round((progressEvent.loaded / Number(progressEvent.total)) * 100);
-          setUploadProgress(progress);
-          if (progress === 100) {
-            setUploadButtonDisabled(false);
-          }
-        }
-      });
+     
     } catch (error) {
       console.error('Error uploading file', error);
     }
@@ -100,7 +87,6 @@ const GalleryComponent: React.FC = () => {
                 <Delete />
               </IconButton>
             </div>
-            <GalleryImage src={`${domain}/image/${image._id}`} />
           </div>
         ))}
       </div>

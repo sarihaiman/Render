@@ -12,13 +12,7 @@ const EmailForm = () => {
     });
 
     const sendEmail = () => {
-        axios.post(`${domain}/send-email`, emailData)
-            .then(() => {
-                console.log('Email sent successfully');
-            })
-            .catch(error => {
-                console.error('Error sending email:', error);
-            });
+        
     };
 
     return (
