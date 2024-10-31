@@ -18217,3 +18217,4 @@ INFO: Calling getBusinessDetails function
 [31.10.2024, 13:21:12] INFO: GET request received at /business
 [31.10.2024, 13:37:09] INFO: GET request received at /business
 [31.10.2024, 13:37:09] INFO: GET request received at /business
+[31.10.2024, 13:50:56] INFO: GET request received at /business
