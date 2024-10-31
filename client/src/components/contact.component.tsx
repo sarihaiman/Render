@@ -37,10 +37,6 @@ const Contact = () => {
         setShowChat(true)
     };
 
-    // const handleChatClick = () => {
-    //     window.location.href = 'http://localhost:5173/chat';
-    // };
-
     const handleCloseDialogError = () => {
         setOpenDialog(false);
     };

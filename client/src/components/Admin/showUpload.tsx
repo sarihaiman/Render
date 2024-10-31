@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Typography, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import GetAppIcon from '@mui/icons-material/GetApp';
+import { domain } from '../../Config';
 
 const downloadFile = async (fileUrl: string) => {
   try {
@@ -27,7 +28,7 @@ export default function DocumentUploadComponent() {
   useEffect(() => {
     const fetchUploads = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/upload');
+        const response = await axios.get(`${domain}/upload`);
         setFilenames(response.data.files);
       } catch (error) {
         console.error('Error fetching files', error);
@@ -42,12 +43,12 @@ export default function DocumentUploadComponent() {
       <List style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {filenames.map((fileName, index) => (
           <div key={index} style={{ width: '300px', height: '70px', margin: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <ListItem key={index} button onClick={() => downloadFile(`http://localhost:3000/uploadOne/${fileName}`)}>
+            {/* <ListItem key={index} button onClick={() => downloadFile(`${domain}/uploadOne/${fileName}`)}>
               <ListItemIcon>
                 <GetAppIcon />
               </ListItemIcon>
               <ListItemText primary={fileName} />
-            </ListItem>
+            </ListItem> */}
           </div>
         ))}
       </List>

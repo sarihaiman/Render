@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { PotographyPackage } from '../interface/PotographyPackage.interface';
+import { domain } from '../Config';
 
 export const getAllPotograpyName = async () => {
     try {
-        const response = await axios.get(`http://localhost:3000/PhotographyPackage`)
+        const response = await axios.get(`${domain}/PhotographyPackage`)
         return response.data;
     } catch (error) {
         console.error('error in api request of users', error);
@@ -14,7 +15,7 @@ export const getAllPotograpyName = async () => {
 export const editPotographyPackage = async (PotographyPackage: PotographyPackage) => {
     try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.put(`http://localhost:3000/PhotographyPackage/${PotographyPackage.id}`, PotographyPackage, {
+        const response = await axios.put(`${domain}/PhotographyPackage/${PotographyPackage.id}`, PotographyPackage, {
           headers: {
             'Content-Type': 'application/json',
             "token": token
@@ -30,7 +31,7 @@ export const editPotographyPackage = async (PotographyPackage: PotographyPackage
 export const deletePotographyPackage = async (PotographyPackageId: Number) => {
     try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.delete(`http://localhost:3000/PhotographyPackage/${PotographyPackageId}`, {
+        const response = await axios.delete(`${domain}/PhotographyPackage/${PotographyPackageId}`, {
             headers: {
                 'Content-Type': 'application/json',
                 "token": token
@@ -46,7 +47,7 @@ export const deletePotographyPackage = async (PotographyPackageId: Number) => {
 export const addPotographyPackage = async (PotographyPackage: PotographyPackage) => {
     try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.post(`http://localhost:3000/PhotographyPackage`, PotographyPackage, {
+        const response = await axios.post(`${domain}/PhotographyPackage`, PotographyPackage, {
             headers: {
                 'Content-Type': 'application/json',
                 "token": token

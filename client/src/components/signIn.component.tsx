@@ -13,6 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { FormHelperText } from '@material-ui/core';
 import { validatePassword, validateEmail } from '../utils/validation';
+import { domain } from '../Config';
 
 export default function SigninForm() {
     const [email, setEmail] = useState('');
@@ -109,7 +110,6 @@ export default function SigninForm() {
             };
             dispatch(FillDataCurrentUser(user));
             sessionStorage.setItem("currentUser", JSON.stringify(user));
-            window.location.href = 'http://localhost:5173/home';
             console.log('SigninForm successful:', response);
         } catch (error: any) {
                     Swal.fire({
@@ -157,7 +157,7 @@ export default function SigninForm() {
                 code = String(Math.floor(100000 + Math.random() * 900000)); // Generate a random code
                 setResetCode(code);
                 setShowModal(true);
-                await axios.get(`http://localhost:3000/send-email`, {
+                await axios.get(`${domain}/send-email`, {
                     headers: {
                         'Content-Type': 'application/json',
                         "reset": code,

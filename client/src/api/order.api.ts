@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { OrderPackage } from "../interface/order.interface";
+import { domain } from '../Config';
 
 export const addOrderPackage = async (order: OrderPackage) => {
     try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.post(`http://localhost:3000/OrderPackage`, order, {
+        const response = await axios.post(`${domain}/OrderPackage`, order, {
             headers: {
                 'Content-Type': 'application/json',
                 "token": token
@@ -20,7 +21,7 @@ export const addOrderPackage = async (order: OrderPackage) => {
 export const getOrderPackage = async() => {
     try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.get(`http://localhost:3000/OrderPackage`, {
+        const response = await axios.get(`${domain}/OrderPackage`, {
             headers: {
                 'Content-Type': 'application/json',
                 "token": token
@@ -36,7 +37,7 @@ export const getOrderPackage = async() => {
 export const deleteOrderPackage = async(id:Number) => {
     try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.delete(`http://localhost:3000/OrderPackage/${id}`, {
+        const response = await axios.delete(`${domain}/OrderPackage/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 "token": token
@@ -52,7 +53,7 @@ export const deleteOrderPackage = async(id:Number) => {
 export const editOrderPackage = async(order: OrderPackage) => {
     try {
         const token = sessionStorage.getItem("token");
-        const response = await axios.put(`http://localhost:3000/OrderPackage/${order.id}`, order , {
+        const response = await axios.put(`${domain}/OrderPackage/${order.id}`, order , {
             headers: {
                 'Content-Type': 'application/json',
                 "token": token

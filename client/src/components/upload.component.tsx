@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import { FaUpload, FaTimes } from 'react-icons/fa';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
+import { domain } from '../Config';
 
 export default function DocumentUploadComponent() {
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -25,7 +26,7 @@ export default function DocumentUploadComponent() {
     formData.append('file', file);
 
     try {
-      await axios.post('http://localhost:3000/upload', formData, {
+      await axios.post(`${domain}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
